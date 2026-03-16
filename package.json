@@ -9,18 +9,11 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@headlessui/react": "^2.2.9",
-    "@types/jsonwebtoken": "^9.0.10",
-    "cloudinary": "^2.9.0",
-    "graphql-request": "^7.4.0",
-    "jsonwebtoken": "^9.0.3",
     "next": "16.1.6",
-    "next-auth": "^4.24.13",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },
   "devDependencies": {
-    "@grafbase/sdk": "^0.27.4",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

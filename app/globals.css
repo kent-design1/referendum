@@ -1,0 +1,419 @@
+@import "tailwindcss";
+
+
+/* ── Design tokens ───────────────────────────────────────────────────────── */
+:root {
+    /* Surfaces */
+    --background:        #ffffff;
+    --background-subtle: #fafaf9;
+    --background-muted:  #f5f4f0;
+
+    /* Yellow accent — warm champagne gold */
+    --yellow:            #f0c040;
+    --yellow-light:      #fef9e8;
+    --yellow-mid:        #f5d278;
+    --yellow-dark:       #a87c10;
+    --yellow-ink:        #6b4f08;
+
+    /* Foreground / text */
+    --foreground:        #18181b;
+    --foreground-2:      #3f3f46;
+    --foreground-3:      #71717a;
+    --foreground-4:      #a1a1aa;
+
+    /* Border */
+    --border:            rgba(0, 0, 0, 0.08);
+    --border-strong:     rgba(0, 0, 0, 0.16);
+
+    /* Feedback */
+    --success:           #16a34a;
+    --success-bg:        #f0fdf4;
+    --error:             #dc2626;
+    --error-bg:          #fef2f2;
+    --warning:           #d97706;
+    --warning-bg:        #fffbeb;
+
+    /* Typography */
+    --font-sans: var(--font-geist-sans), "Inter", ui-sans-serif, system-ui, sans-serif;
+    --font-mono: var(--font-geist-mono), "JetBrains Mono", ui-monospace, monospace;
+
+    /* Radius */
+    --radius-sm:   6px;
+    --radius-md:   10px;
+    --radius-lg:   14px;
+    --radius-xl:   20px;
+    --radius-full: 9999px;
+}
+
+/* ── Dark mode ───────────────────────────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background:        #0f0f10;
+        --background-subtle: #17171a;
+        --background-muted:  #1f1f24;
+
+        --yellow:            #e8b830;
+        --yellow-light:      #2a2210;
+        --yellow-mid:        #a8831c;
+        --yellow-dark:       #f5d278;
+        --yellow-ink:        #fef3c7;
+
+        --foreground:        #fafafa;
+        --foreground-2:      #d4d4d8;
+        --foreground-3:      #a1a1aa;
+        --foreground-4:      #52525b;
+
+        --border:            rgba(255, 255, 255, 0.08);
+        --border-strong:     rgba(255, 255, 255, 0.15);
+
+        --success-bg:        #052e16;
+        --error-bg:          #450a0a;
+        --warning-bg:        #1c1003;
+    }
+}
+
+/* ── Tailwind v4 theme mapping ───────────────────────────────────────────── */
+@theme inline {
+    --color-background:        var(--background);
+    --color-background-subtle: var(--background-subtle);
+    --color-background-muted:  var(--background-muted);
+
+    --color-yellow:            var(--yellow);
+    --color-yellow-light:      var(--yellow-light);
+    --color-yellow-mid:        var(--yellow-mid);
+    --color-yellow-dark:       var(--yellow-dark);
+    --color-yellow-ink:        var(--yellow-ink);
+
+    --color-foreground:        var(--foreground);
+    --color-foreground-2:      var(--foreground-2);
+    --color-foreground-3:      var(--foreground-3);
+    --color-foreground-4:      var(--foreground-4);
+
+    --color-border:            var(--border);
+    --color-border-strong:     var(--border-strong);
+
+    --color-success:           var(--success);
+    --color-success-bg:        var(--success-bg);
+    --color-error:             var(--error);
+    --color-error-bg:          var(--error-bg);
+    --color-warning:           var(--warning);
+    --color-warning-bg:        var(--warning-bg);
+
+    --font-sans: var(--font-sans);
+    --font-mono: var(--font-mono);
+
+    --radius-sm:   var(--radius-sm);
+    --radius-md:   var(--radius-md);
+    --radius-lg:   var(--radius-lg);
+    --radius-xl:   var(--radius-xl);
+    --radius-full: var(--radius-full);
+}
+
+/* ── Base resets ─────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100dvh;
+}
+
+/* ── Typography ──────────────────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--foreground);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+}
+
+h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
+h2 { font-size: clamp(1.3rem,  3vw, 1.75rem); }
+h3 { font-size: 1.15rem; }
+h4 { font-size: 0.95rem; font-weight: 500; }
+
+p {
+    color: var(--foreground-2);
+    line-height: 1.7;
+}
+
+small {
+    font-size: 0.75rem;
+    color: var(--foreground-3);
+}
+
+a {
+    color: var(--yellow-dark);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.15s ease;
+}
+a:hover { color: var(--yellow); }
+
+strong { font-weight: 600; color: var(--foreground); }
+
+code, kbd, pre {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+}
+
+code {
+    background: var(--background-muted);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.15em 0.45em;
+    color: var(--foreground-2);
+}
+
+/* ── Scrollbar ───────────────────────────────────────────────────────────── */
+::-webkit-scrollbar          { width: 5px; height: 5px; }
+::-webkit-scrollbar-track    { background: transparent; }
+::-webkit-scrollbar-thumb    { background: var(--border-strong); border-radius: var(--radius-full); }
+::-webkit-scrollbar-thumb:hover { background: var(--foreground-4); }
+
+/* ── Focus ring ──────────────────────────────────────────────────────────── */
+:focus-visible {
+    outline: 2px solid var(--yellow);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+}
+
+/* ── Selection ───────────────────────────────────────────────────────────── */
+::selection {
+    background: var(--yellow-light);
+    color: var(--yellow-ink);
+}
+
+/* ── Utility classes ─────────────────────────────────────────────────────── */
+@layer utilities {
+
+    /* Layout */
+    .page-container {
+        width: 100%;
+        max-width: 80rem;
+        margin-inline: auto;
+        padding-inline: 1.25rem;
+    }
+
+    /* Card surfaces */
+    .card {
+        background: var(--background);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+    }
+    .card-subtle {
+        background: var(--background-subtle);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+    }
+    .card-header {
+        padding: 1rem 1.25rem;
+        border-bottom: 1px solid var(--border);
+    }
+    .card-body { padding: 1.25rem; }
+
+    /* Yellow accent surface */
+    .surface-yellow {
+        background: var(--yellow-light);
+        border: 1px solid color-mix(in srgb, var(--yellow) 35%, transparent);
+        border-radius: var(--radius-md);
+    }
+
+    /* Badges */
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.2rem 0.65rem;
+        font-size: 0.7rem;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        border-radius: var(--radius-full);
+        background: var(--background-muted);
+        color: var(--foreground-3);
+        border: 1px solid var(--border);
+    }
+    .badge-yellow {
+        background: var(--yellow-light);
+        color: var(--yellow-ink);
+        border-color: color-mix(in srgb, var(--yellow) 40%, transparent);
+    }
+    .badge-success {
+        background: var(--success-bg);
+        color: var(--success);
+        border-color: color-mix(in srgb, var(--success) 20%, transparent);
+    }
+    .badge-error {
+        background: var(--error-bg);
+        color: var(--error);
+        border-color: color-mix(in srgb, var(--error) 20%, transparent);
+    }
+
+    /* Buttons */
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.825rem;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+        border-radius: var(--radius-md);
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        white-space: nowrap;
+    }
+    .btn-primary {
+        background: var(--foreground);
+        color: var(--background);
+        border-color: var(--foreground);
+    }
+    .btn-primary:hover { background: var(--foreground-2); border-color: var(--foreground-2); }
+
+    .btn-yellow {
+        background: var(--yellow);
+        color: var(--yellow-ink);
+        border-color: var(--yellow);
+        font-weight: 600;
+    }
+    .btn-yellow:hover { background: var(--yellow-mid); border-color: var(--yellow-mid); }
+
+    .btn-outline {
+        background: transparent;
+        color: var(--foreground-2);
+        border-color: var(--border-strong);
+    }
+    .btn-outline:hover { background: var(--background-muted); color: var(--foreground); }
+
+    .btn-ghost {
+        background: transparent;
+        color: var(--foreground-3);
+        border-color: transparent;
+    }
+    .btn-ghost:hover { background: var(--background-muted); color: var(--foreground); }
+
+    .btn-sm {
+        padding: 0.3rem 0.7rem;
+        font-size: 0.75rem;
+        border-radius: var(--radius-sm);
+    }
+
+    /* Nav */
+    .nav-link {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--foreground-3);
+        border-radius: var(--radius-md);
+        transition: all 0.15s ease;
+    }
+    .nav-link:hover { background: var(--background-muted); color: var(--foreground); }
+    .nav-link-active { color: var(--foreground); background: var(--background-muted); }
+
+    /* Tabs */
+    .tab {
+        padding: 0.4rem 0.85rem;
+        font-size: 0.78rem;
+        font-weight: 500;
+        color: var(--foreground-3);
+        border-radius: var(--radius-md);
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition: all 0.15s ease;
+    }
+    .tab:hover { background: var(--background-muted); color: var(--foreground); }
+    .tab-active {
+        background: var(--background);
+        color: var(--foreground);
+        border-color: var(--border-strong);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    }
+
+    /* Progress bars */
+    .progress-track {
+        width: 100%;
+        height: 6px;
+        background: var(--background-muted);
+        border-radius: var(--radius-full);
+        overflow: hidden;
+    }
+    .progress-fill {
+        height: 100%;
+        background: var(--foreground);
+        border-radius: var(--radius-full);
+        transition: width 0.4s ease;
+    }
+    .progress-fill-yellow { background: var(--yellow); }
+
+    /* Input */
+    .input {
+        width: 100%;
+        padding: 0.5rem 0.85rem;
+        font-size: 0.85rem;
+        font-family: var(--font-sans);
+        color: var(--foreground);
+        background: var(--background);
+        border: 1px solid var(--border-strong);
+        border-radius: var(--radius-md);
+        outline: none;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        line-height: 1.5;
+    }
+    .input::placeholder { color: var(--foreground-4); }
+    .input:hover  { border-color: var(--foreground-4); }
+    .input:focus  {
+        border-color: var(--yellow);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--yellow) 18%, transparent);
+    }
+
+    /* Divider */
+    .divider { height: 1px; background: var(--border); width: 100%; }
+
+    /* Text helpers */
+    .text-muted    { color: var(--foreground-3); }
+    .text-subtle   { color: var(--foreground-4); }
+    .text-yellow   { color: var(--yellow-dark); }
+    .text-label {
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--foreground-4);
+    }
+}
+
+@layer base {
+
+    main {
+        @apply mx-auto container flex flex-col sm:px-10 px-5 py-10;
+    }
+
+    h1 {
+        @apply text-6xl font-semibold max-sm:text-4xl;
+    }
+
+    h3 {
+        @apply text-2xl font-bold;
+    }
+
+    ul {
+        @apply list-disc list-inside;
+    }
+}
