@@ -5,24 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b31521f5-084d-4c01-97e4-b741f68c284b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/referendum_history/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/upcoming_votes/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/?tab=/discussion/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/tabs/Arguments.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/tabs/Citizen_Discussion.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/pages/page.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Layout/Footer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Layout/Footer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/pages/layout.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/referendum_history/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/referendum_history/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/Layout/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Layout/Header.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/Layout/HomeClient.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Layout/HomeClient.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Referendum/FactsCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Referendum/FactsCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Referendum/QuickTake.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Referendum/QuickTake.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Referendum/ReferendumCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Referendum/ReferendumCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Sidebar/ChatAssistant.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Sidebar/ChatAssistant.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/UI_Primitives/Card.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/UI_Primitives/Card.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/postcss.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/postcss.config.mjs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,6 +60,8 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/components/tabs" />
+      <recent name="$PROJECT_DIR$/components/Layout" />
       <recent name="$PROJECT_DIR$/app" />
       <recent name="$PROJECT_DIR$/lib" />
     </key>
@@ -108,7 +100,7 @@
       <workItem from="1773657371535" duration="897000" />
       <workItem from="1773659002867" duration="11601000" />
       <workItem from="1773677515023" duration="136000" />
-      <workItem from="1773678293088" duration="15977000" />
+      <workItem from="1773678293088" duration="20226000" />
     </task>
     <servers />
   </component>

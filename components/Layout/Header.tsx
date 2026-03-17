@@ -13,7 +13,6 @@ const NAV_LINKS: { label: string; href: string }[] = [
     { label: "Home",               href: "/"          },
     { label: "Upcoming Votes",     href: "/upcoming_votes"     },
     { label: "Referendum History", href: "/referendum_history"     },
-    { label: "My Canton",          href: "/canton"    },
 ];
 
 /*
@@ -21,10 +20,10 @@ const NAV_LINKS: { label: string; href: string }[] = [
   We drive them with a `?tab=` search param so the URL is bookmarkable
   and the header can read the active tab without any prop from the page.
 */
-const TABS: { id: string; label: string }[] = [
-    { id: "overview",   label: "Overview"            },
-    { id: "arguments",  label: "Arguments"           },
-    { id: "discussion", label: "Citizen Discussion"  },
+const TABS: { id: string; label: string; href: string }[] = [
+    { id: "overview",   label: "Overview", href: "/"          },
+    { id: "arguments",  label: "Arguments", href: "/arguments"           },
+    { id: "discussion", label: "Citizen Discussion", href: "/discussion"  },
 ];
 
 /* ── Stand types ─────────────────────────────────────────────── */
@@ -436,7 +435,7 @@ export default function Header() {
                         <div className="mr-2 hidden h-4 w-px self-center bg-border-strong sm:block" />
 
                         {/* Tabs — Link with ?tab= search param */}
-                        <div className="flex flex-wrap gap-1">
+                        <div className="flex flex-wrap gap-6">
                             {TABS.map((tab) => {
                                 const active = activeTab === tab.id;
                                 return (
