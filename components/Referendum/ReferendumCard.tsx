@@ -53,8 +53,8 @@ export default function ReferendumCard() {
             gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
             gap: "12px",
           }}>
-            <PreferencesPanel preferences={userPreferences} />
-            <QuickTake arguments_={arguments_} />
+            <PreferencesPanel />
+            <QuickTake  />
           </div>
         </div>
 
@@ -86,7 +86,7 @@ export default function ReferendumCard() {
         gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
         gap: "12px",
       }}>
-        <FactsCard facts={facts} />
+        <FactsCard  />
         <WhatChangesCard />
       </div>
 

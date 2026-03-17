@@ -5,14 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b31521f5-084d-4c01-97e4-b741f68c284b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/?tab=/discussion/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/tabs/Arguments.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/tabs/Citizen_Discussion.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/UI_Primitives/Floatingchat.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/tabs/VoteSwitcher.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/pages/layout.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/referendum_history/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/referendum_history/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Layout/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Layout/Header.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/Layout/HomeClient.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Layout/HomeClient.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Referendum/FactsCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Referendum/FactsCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Referendum/PreferencesPanel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Referendum/PreferencesPanel.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Referendum/QuickTake.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Referendum/QuickTake.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Referendum/ReferendumCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Referendum/ReferendumCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Referendum/WhatChangesCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Referendum/WhatChangesCard.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +101,7 @@
       <workItem from="1773657371535" duration="897000" />
       <workItem from="1773659002867" duration="11601000" />
       <workItem from="1773677515023" duration="136000" />
-      <workItem from="1773678293088" duration="20226000" />
+      <workItem from="1773678293088" duration="28426000" />
     </task>
     <servers />
   </component>
