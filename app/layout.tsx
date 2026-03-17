@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import React from "react";
+import Footer from "@/components/Layout/Footer";
+import Header from "@/components/Layout/Header";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -66,8 +68,10 @@ export default function RootLayout({
         >
         <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased`}>
 
-        <main>
+        <main className="mx-auto container ">
+            <Header />
             {children}
+            <Footer />
         </main>
         </body>
 

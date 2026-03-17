@@ -90,6 +90,8 @@ export default function ReferendumCard() {
         <WhatChangesCard />
       </div>
 
+
+
       {/* Mock disclaimer */}
       <p style={{ fontSize: "0.7rem", color: "var(--foreground-4)", margin: 0 }}>
         Mockup display — all data is placeholder only.

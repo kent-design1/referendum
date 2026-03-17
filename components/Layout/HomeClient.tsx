@@ -1,8 +1,6 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import Header from "@/components/Layout/Header";
-import Footer from "@/components/Layout/Footer";
 import ReferendumCard from "@/components/Referendum/ReferendumCard";
 import ChatAssistant from "@/components/Sidebar/ChatAssistant";
 import DeliberationInsights from "@/components/Sidebar/DeliberationInsights";
@@ -117,10 +115,7 @@ export default function HomeClient() {
 
     return (
         <>
-            {/* Measured wrapper so sticky sidebar offset stays exact */}
-            <div ref={headerRef}>
-                <Header activeTab={activeTab} onTabChange={setActiveTab} />
-            </div>
+
 
             {/*
         <main> intentionally has NO centering classes here.
@@ -155,7 +150,7 @@ export default function HomeClient() {
 
                         {/* Right column — sticky sidebar */}
                         <aside
-                            className="flex flex-col gap-4 w-full overflow-y-auto"
+                            className="flex flex-col gap-4 w-full overflow-y-auto min-h-screen"
                             style={{
                                 position:       "sticky",
                                 top:            `calc(${headerHeight}px + 1.25rem)`,
@@ -164,15 +159,16 @@ export default function HomeClient() {
                             }}
                         >
                             <ChatAssistant />
-                            <DeliberationInsights />
                             <SourcesPanel />
                         </aside>
+                    </div>
+                    <div className="flex flex-row gap-4 w-full overflow-y-auto">
+                        {/*<DeliberationInsights />*/}
+
                     </div>
 
                 </div>
             </main>
-
-            <Footer />
             <ScrollToTop />
         </>
     );
