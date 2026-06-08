@@ -1,146 +1,181 @@
-/* ─────────────────────────────────────────────────────────────
-   ArgumentsPanel — replace MOCK_ARGUMENTS with API data later
-   ───────────────────────────────────────────────────────────── */
+"use client";
 
-export type ArgumentSide      = "pro" | "con";
-export type ArgumentStrength  = "strong" | "moderate" | "weak";
-export type ArgumentCategory  = "Economic" | "Environmental" | "Social" | "Legal" | "Governance";
+import { useState } from "react";
+
+/* ─────────────────────────────────────────────────────────────
+   TYPES
+   ───────────────────────────────────────────────────────────── */
+export type ArgumentSide     = "pro" | "con";
+export type ArgumentStrength = "strong" | "moderate" | "weak";
+export type ArgumentCategory = "Economic" | "Environmental" | "Social" | "Legal" | "Governance";
 
 export interface Argument {
-    id:         string;
-    side:       ArgumentSide;
-    title:      string;
-    body:       string;
-    category:   ArgumentCategory;
-    strength:   ArgumentStrength;
-    sourceId?:  string;          // e.g. "S1"
+    id:           string;
+    side:         ArgumentSide;
+    title:        string;
+    body:         string;
+    category:     ArgumentCategory;
+    strength:     ArgumentStrength;
+    sourceId?:    string;
     sourceLabel?: string;
-    upvotes:    number;
-    contested?: boolean;         // flagged as disputed
+    upvotes:      number;
+    contested?:   boolean;
+    voteId?:      string;   /* scope to a referendum — used when API wired up */
 }
 
 /* ─────────────────────────────────────────────────────────────
    MOCK DATA
    ───────────────────────────────────────────────────────────── */
 const MOCK_ARGUMENTS: Argument[] = [
-    /* ── PRO ─────────────────────────────────────────────── */
+
+    /* ── CLIMATE FUND — PRO ───────────────────────────────── */
     {
-        id: "pro-1",
-        side: "pro",
-        title: "Provides long-term planning security",
-        body: "A dedicated fund removes year-by-year budget uncertainty, allowing cantons and municipalities to commission multi-year decarbonisation projects with confidence.",
-        category: "Governance",
-        strength: "strong",
-        sourceId: "S1",
-        sourceLabel: "Federal Voting Booklet",
-        upvotes: 84,
+        id: "pro-1", side: "pro", voteId: "fed-2025-06-01",
+        title:       "Provides long-term planning security",
+        body:        "A dedicated fund removes year-by-year budget uncertainty, allowing cantons and municipalities to commission multi-year decarbonisation projects with confidence.",
+        category:    "Governance", strength: "strong",
+        sourceId:    "S1", sourceLabel: "Federal Voting Booklet",
+        upvotes:     84,
     },
     {
-        id: "pro-2",
-        side: "pro",
-        title: "Accelerates renewable energy deployment",
-        body: "Modelling by EPFL estimates the fund would bring forward solar and wind capacity additions by 3–5 years compared to the current subsidy regime.",
-        category: "Environmental",
-        strength: "strong",
-        sourceId: "S3",
-        sourceLabel: "EPFL Energy Study, 2024",
-        upvotes: 71,
+        id: "pro-2", side: "pro", voteId: "fed-2025-06-01",
+        title:       "Accelerates renewable energy deployment",
+        body:        "Modelling by EPFL estimates the fund would bring forward solar and wind capacity additions by 3–5 years compared to the current subsidy regime.",
+        category:    "Environmental", strength: "strong",
+        sourceId:    "S3", sourceLabel: "EPFL Energy Study, 2024",
+        upvotes:     71,
     },
     {
-        id: "pro-3",
-        side: "pro",
-        title: "Creates 15,000 green-sector jobs",
-        body: "Seco projections suggest the investment programme would support up to 15,000 full-time-equivalent positions in construction, engineering, and facility management.",
-        category: "Economic",
-        strength: "moderate",
-        sourceId: "S4",
-        sourceLabel: "Seco Impact Assessment",
-        upvotes: 56,
-        contested: true,
+        id: "pro-3", side: "pro", voteId: "fed-2025-06-01",
+        title:       "Creates 15,000 green-sector jobs",
+        body:        "Seco projections suggest the investment programme would support up to 15,000 full-time-equivalent positions in construction, engineering, and facility management.",
+        category:    "Economic", strength: "moderate",
+        sourceId:    "S4", sourceLabel: "Seco Impact Assessment",
+        upvotes:     56, contested: true,
     },
     {
-        id: "pro-4",
-        side: "pro",
-        title: "Strengthens Switzerland's Paris Agreement compliance",
-        body: "Current projections put Switzerland 18% short of its 2030 NDC target. The fund directly addresses the investment gap identified by BAFU.",
-        category: "Legal",
-        strength: "strong",
-        sourceId: "S2",
-        sourceLabel: "BAFU Climate Report",
-        upvotes: 63,
+        id: "pro-4", side: "pro", voteId: "fed-2025-06-01",
+        title:       "Strengthens Switzerland's Paris Agreement compliance",
+        body:        "Current projections put Switzerland 18% short of its 2030 NDC target. The fund directly addresses the investment gap identified by BAFU.",
+        category:    "Legal", strength: "strong",
+        sourceId:    "S2", sourceLabel: "BAFU Climate Report",
+        upvotes:     63,
     },
     {
-        id: "pro-5",
-        side: "pro",
-        title: "Reduces long-run healthcare costs",
-        body: "Air quality improvements driven by fossil fuel phase-out are projected to save CHF 400M annually in respiratory and cardiovascular healthcare expenditures by 2035.",
-        category: "Social",
-        strength: "moderate",
-        sourceId: "S5",
-        sourceLabel: "BAG Health-Climate Brief",
-        upvotes: 39,
+        id: "pro-5", side: "pro", voteId: "fed-2025-06-01",
+        title:       "Reduces long-run healthcare costs",
+        body:        "Air quality improvements driven by fossil fuel phase-out are projected to save CHF 400M annually in respiratory and cardiovascular healthcare expenditures by 2035.",
+        category:    "Social", strength: "moderate",
+        sourceId:    "S5", sourceLabel: "BAG Health-Climate Brief",
+        upvotes:     39,
     },
 
-    /* ── CON ──────────────────────────────────────────────── */
+    /* ── CLIMATE FUND — CON ───────────────────────────────── */
     {
-        id: "con-1",
-        side: "con",
-        title: "CHF 2B annual cost lacks firm fiscal offset",
-        body: "The Federal Finance Administration notes that no explicit revenue source has been earmarked. Critics argue this creates structural budget pressure or requires a payroll levy.",
-        category: "Economic",
-        strength: "strong",
-        sourceId: "S1",
-        sourceLabel: "Federal Voting Booklet",
-        upvotes: 78,
+        id: "con-1", side: "con", voteId: "fed-2025-06-01",
+        title:       "CHF 2B annual cost lacks firm fiscal offset",
+        body:        "The Federal Finance Administration notes that no explicit revenue source has been earmarked. Critics argue this creates structural budget pressure or requires a payroll levy.",
+        category:    "Economic", strength: "strong",
+        sourceId:    "S1", sourceLabel: "Federal Voting Booklet",
+        upvotes:     78,
     },
     {
-        id: "con-2",
-        side: "con",
-        title: "Bypasses established cantonal environmental competencies",
-        body: "The Conference of Cantonal Governments argues the fund centralises decisions that the Constitution currently assigns to cantons, undermining federalism.",
-        category: "Legal",
-        strength: "strong",
-        sourceId: "S6",
-        sourceLabel: "Conference of Cantonal Governments",
-        upvotes: 65,
+        id: "con-2", side: "con", voteId: "fed-2025-06-01",
+        title:       "Bypasses established cantonal environmental competencies",
+        body:        "The Conference of Cantonal Governments argues the fund centralises decisions that the Constitution currently assigns to cantons, undermining federalism.",
+        category:    "Legal", strength: "strong",
+        sourceId:    "S6", sourceLabel: "Conference of Cantonal Governments",
+        upvotes:     65,
     },
     {
-        id: "con-3",
-        side: "con",
-        title: "Technology lock-in risk",
-        body: "Locking in specific technologies via a dedicated fund may disadvantage superior solutions that emerge in the 2030s, reducing flexibility.",
-        category: "Governance",
-        strength: "moderate",
-        sourceId: "S3",
-        sourceLabel: "EPFL Energy Study, 2024",
-        upvotes: 42,
-        contested: true,
+        id: "con-3", side: "con", voteId: "fed-2025-06-01",
+        title:       "Technology lock-in risk",
+        body:        "Locking in specific technologies via a dedicated fund may disadvantage superior solutions that emerge in the 2030s, reducing flexibility.",
+        category:    "Governance", strength: "moderate",
+        sourceId:    "S3", sourceLabel: "EPFL Energy Study, 2024",
+        upvotes:     42, contested: true,
     },
     {
-        id: "con-4",
-        side: "con",
-        title: "Implementation safeguards are undefined",
-        body: "The initiative text does not specify an independent oversight body or audit mechanism, leaving allocation criteria to future Federal Council ordinances.",
-        category: "Governance",
-        strength: "strong",
-        sourceId: "S2",
-        sourceLabel: "BAFU Climate Report",
-        upvotes: 59,
+        id: "con-4", side: "con", voteId: "fed-2025-06-01",
+        title:       "Implementation safeguards are undefined",
+        body:        "The initiative text does not specify an independent oversight body or audit mechanism, leaving allocation criteria to future Federal Council ordinances.",
+        category:    "Governance", strength: "strong",
+        sourceId:    "S2", sourceLabel: "BAFU Climate Report",
+        upvotes:     59,
     },
     {
-        id: "con-5",
-        side: "con",
-        title: "Higher electricity prices for households",
-        body: "Rapid grid expansion required to support new capacity is estimated to add CHF 120–180 per year to the average household electricity bill.",
-        category: "Social",
-        strength: "moderate",
-        sourceId: "S4",
-        sourceLabel: "Seco Impact Assessment",
-        upvotes: 34,
-        contested: true,
+        id: "con-5", side: "con", voteId: "fed-2025-06-01",
+        title:       "Higher electricity prices for households",
+        body:        "Rapid grid expansion required to support new capacity is estimated to add CHF 120–180 per year to the average household electricity bill.",
+        category:    "Social", strength: "moderate",
+        sourceId:    "S4", sourceLabel: "Seco Impact Assessment",
+        upvotes:     34, contested: true,
+    },
+
+    /* ── POPULATION CAP — PRO ─────────────────────────────── */
+    {
+        id: "pro-pc-1", side: "pro", voteId: "fed-2025-06-04",
+        title:       "Prevents infrastructure from being overwhelmed",
+        body:        "Switzerland's housing, transport, and healthcare systems are already under strain. A constitutional cap gives planners a firm ceiling to design around rather than perpetually chasing demand.",
+        category:    "Social", strength: "strong",
+        sourceId:    "S1", sourceLabel: "Federal Voting Booklet",
+        upvotes:     67,
+    },
+    {
+        id: "pro-pc-2", side: "pro", voteId: "fed-2025-06-04",
+        title:       "Reduces land consumption and urban sprawl",
+        body:        "BAFU data shows built-up area expanding by 1 m² per second. A population ceiling would reduce pressure on agricultural land and biodiversity corridors.",
+        category:    "Environmental", strength: "moderate",
+        sourceId:    "S2", sourceLabel: "BAFU Land Use Report",
+        upvotes:     54,
+    },
+    {
+        id: "pro-pc-3", side: "pro", voteId: "fed-2025-06-04",
+        title:       "Restores democratic control over population policy",
+        body:        "Proponents argue that Switzerland's resident population has grown by over 1 million in a decade with no direct democratic mandate. A constitutional cap returns that decision to voters.",
+        category:    "Governance", strength: "moderate",
+        sourceId:    "S1", sourceLabel: "Federal Voting Booklet",
+        upvotes:     49,
+    },
+
+    /* ── POPULATION CAP — CON ─────────────────────────────── */
+    {
+        id: "con-pc-1", side: "con", voteId: "fed-2025-06-04",
+        title:       "Directly conflicts with EU Free Movement Agreement",
+        body:        "The Bilateral Agreement on Free Movement of Persons explicitly prohibits numerical caps on EU/EFTA citizens. Passing this initiative forces a renegotiation or termination of the Bilaterals — a legally binding conflict with Switzerland's largest trading partner.",
+        category:    "Legal", strength: "strong",
+        sourceId:    "S6", sourceLabel: "Federal Dept. of Foreign Affairs",
+        upvotes:     89,
+    },
+    {
+        id: "con-pc-2", side: "con", voteId: "fed-2025-06-04",
+        title:       "Labour shortages would deepen across key sectors",
+        body:        "Healthcare, construction, and technology already depend heavily on foreign workers. Seco projects a hard cap would leave 80,000–120,000 positions unfilled within five years, worsening existing shortages.",
+        category:    "Economic", strength: "strong",
+        sourceId:    "S4", sourceLabel: "Seco Labour Market Report",
+        upvotes:     76,
+    },
+    {
+        id: "con-pc-3", side: "con", voteId: "fed-2025-06-04",
+        title:       "'Permanent resident' definition is legally ambiguous",
+        body:        "The initiative text does not specify whether cross-border workers, asylum seekers, or seasonal permit holders count toward the 10 million threshold, creating significant implementation uncertainty.",
+        category:    "Legal", strength: "moderate",
+        sourceId:    "S1", sourceLabel: "Federal Voting Booklet",
+        upvotes:     48, contested: true,
+    },
+    {
+        id: "con-pc-4", side: "con", voteId: "fed-2025-06-04",
+        title:       "Pension system would face acute funding pressure",
+        body:        "Switzerland's AVS/AHV pension system relies on a growing workforce paying contributions. A capped population shrinks the contributor base faster than the retiree base, accelerating the funding gap by an estimated 15 years.",
+        category:    "Economic", strength: "strong",
+        sourceId:    "S4", sourceLabel: "Seco Demographic Impact Study",
+        upvotes:     71,
     },
 ];
 
+/* ─────────────────────────────────────────────────────────────
+   CONFIG
+   ───────────────────────────────────────────────────────────── */
 const CATEGORY_ICONS: Record<ArgumentCategory, string> = {
     Economic:      "📊",
     Environmental: "🌱",
@@ -150,22 +185,47 @@ const CATEGORY_ICONS: Record<ArgumentCategory, string> = {
 };
 
 const STRENGTH_CONFIG: Record<ArgumentStrength, { label: string; color: string; bg: string }> = {
-    strong:   { label: "Strong",   color: "var(--color-text-primary)", bg: "var(--background-muted)" },
-    moderate: { label: "Moderate", color: "var(--color-text-muted)",   bg: "var(--background-muted)" },
+    strong:   { label: "Strong",   color: "var(--color-text-primary)",  bg: "var(--background-muted)" },
+    moderate: { label: "Moderate", color: "var(--color-text-muted)",    bg: "var(--background-muted)" },
     weak:     { label: "Weak",     color: "var(--color-text-tertiary)", bg: "var(--background-muted)" },
+};
+
+const VOTE_TITLES: Record<string, string> = {
+    "fed-2025-06-01": "Initiative for a Climate Fund",
+    "fed-2025-06-02": "Counter-proposal: Corporate Emission Targets",
+    "fed-2025-06-03": "Referendum Against Grid Expansion Act",
+    "fed-2025-06-04": "Initiative for a Population Growth Cap",
 };
 
 /* ─────────────────────────────────────────────────────────────
    COMPONENT
    ───────────────────────────────────────────────────────────── */
-export default function ArgumentsPanel() {
-    const pros = MOCK_ARGUMENTS.filter((a) => a.side === "pro");
-    const cons = MOCK_ARGUMENTS.filter((a) => a.side === "con");
+interface ArgumentsPanelProps {
+    voteId?: string;   /* pass from HomeClient — scopes arguments to active vote */
+}
+
+export default function ArgumentsPanel({ voteId }: ArgumentsPanelProps) {
+    /*
+      Filter by voteId when provided.
+      Falls back to all arguments if no voteId (safe for mockup).
+      Replace MOCK_ARGUMENTS with:
+        const data = await fetch(`/api/votes/${voteId}/arguments`).then(r => r.json())
+    */
+    const scoped = voteId
+        ? MOCK_ARGUMENTS.filter((a) => a.voteId === voteId)
+        : MOCK_ARGUMENTS;
+
+    const pros = scoped.filter((a) => a.side === "pro");
+    const cons = scoped.filter((a) => a.side === "con");
 
     const totalUpvotesPro = pros.reduce((s, a) => s + a.upvotes, 0);
     const totalUpvotesCon = cons.reduce((s, a) => s + a.upvotes, 0);
-    const totalUpvotes    = totalUpvotesPro + totalUpvotesCon;
+    const totalUpvotes    = totalUpvotesPro + totalUpvotesCon || 1;
     const proWeight       = Math.round((totalUpvotesPro / totalUpvotes) * 100);
+
+    const panelTitle = voteId
+        ? (VOTE_TITLES[voteId] ?? "Referendum Arguments")
+        : "All Arguments";
 
     return (
         <div className="ap-shell">
@@ -174,9 +234,9 @@ export default function ArgumentsPanel() {
             <div className="ap-header">
                 <div className="ap-header-left">
                     <p className="ap-eyebrow">Arguments</p>
-                    <h2 className="ap-title">Initiative for a Climate Fund</h2>
+                    <h2 className="ap-title">{panelTitle}</h2>
                     <p className="ap-subtitle">
-                        {MOCK_ARGUMENTS.length} curated arguments from verified sources ·{" "}
+                        {scoped.length} curated arguments from verified sources ·{" "}
                         <span className="ap-subtitle-note">Replace with API data</span>
                     </p>
                 </div>
@@ -196,7 +256,9 @@ export default function ArgumentsPanel() {
                     <div className="ap-weight-fill" style={{ width: `${proWeight}%` }} />
                     <div className="ap-weight-midline" />
                 </div>
-                <p className="ap-weight-note">Based on {totalUpvotes} community upvotes on sourced arguments</p>
+                <p className="ap-weight-note">
+                    Based on {totalUpvotes} community upvotes on sourced arguments
+                </p>
             </div>
 
             {/* ── Columns ─────────────────────────────────────────── */}
@@ -210,7 +272,10 @@ export default function ArgumentsPanel() {
                         <span className="ap-col-count">{pros.length}</span>
                     </div>
                     <div className="ap-col-list">
-                        {pros.map((arg) => <ArgumentCard key={arg.id} arg={arg} />)}
+                        {pros.length > 0
+                            ? pros.map((arg) => <ArgumentCard key={arg.id} arg={arg} />)
+                            : <p className="ap-empty">No arguments yet for this vote.</p>
+                        }
                     </div>
                 </div>
 
@@ -222,7 +287,10 @@ export default function ArgumentsPanel() {
                         <span className="ap-col-count">{cons.length}</span>
                     </div>
                     <div className="ap-col-list">
-                        {cons.map((arg) => <ArgumentCard key={arg.id} arg={arg} />)}
+                        {cons.length > 0
+                            ? cons.map((arg) => <ArgumentCard key={arg.id} arg={arg} />)
+                            : <p className="ap-empty">No arguments yet for this vote.</p>
+                        }
                     </div>
                 </div>
             </div>
@@ -233,19 +301,16 @@ export default function ArgumentsPanel() {
                     <circle cx="6.5" cy="6.5" r="5.5" stroke="currentColor" strokeWidth="1.2" />
                     <path d="M6.5 5.5v4M6.5 4v.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
                 </svg>
-                Arguments are curated from the official Federal Voting Booklet and cited third-party analyses.
-                They represent positions held by stakeholders, not the platform's stance.
-                Contested arguments are flagged.
+                Arguments are curated from the official Federal Voting Booklet and cited
+                third-party analyses. They represent positions held by stakeholders, not the
+                platform's stance. Contested arguments are flagged.
             </div>
 
             {/* ── Scoped styles ───────────────────────────────────── */}
             <style>{`
 
-        /* Shell */
         .ap-shell {
-          display: flex;
-          flex-direction: column;
-          gap: 0;
+          display: flex; flex-direction: column; gap: 0;
           background: var(--color-surface);
           border: 1px solid var(--color-border);
           border-radius: var(--radius-lg);
@@ -255,10 +320,8 @@ export default function ArgumentsPanel() {
 
         /* Header */
         .ap-header {
-          display: flex;
-          align-items: flex-start;
-          justify-content: space-between;
-          gap: 1rem;
+          display: flex; align-items: flex-start;
+          justify-content: space-between; gap: 1rem;
           padding: 1rem 1rem 0.875rem;
           border-bottom: 1px solid var(--color-border-subtle);
         }
@@ -266,135 +329,72 @@ export default function ArgumentsPanel() {
         .ap-header-left { display: flex; flex-direction: column; gap: 3px; }
 
         .ap-eyebrow {
-          font-size: 0.65rem;
-          font-weight: 700;
-          text-transform: uppercase;
-          letter-spacing: 0.08em;
-          color: var(--color-text-muted);
-          margin: 0;
+          font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+          letter-spacing: 0.08em; color: var(--color-text-muted); margin: 0;
         }
 
         .ap-title {
-          font-size: 0.9rem;
-          font-weight: 700;
-          letter-spacing: -0.015em;
-          color: var(--color-text-primary);
-          margin: 0;
-          line-height: 1.3;
+          font-size: 0.9rem; font-weight: 700; letter-spacing: -0.015em;
+          color: var(--color-text-primary); margin: 0; line-height: 1.3;
         }
 
-        .ap-subtitle {
-          font-size: 0.72rem;
-          color: var(--color-text-muted);
-          margin: 0;
-        }
+        .ap-subtitle { font-size: 0.72rem; color: var(--color-text-muted); margin: 0; }
 
-        .ap-subtitle-note {
-          color: var(--yellow-dark);
-          font-weight: 600;
-        }
+        .ap-subtitle-note { color: var(--yellow-dark); font-weight: 600; }
 
-        .ap-header-badges {
-          display: flex;
-          gap: 5px;
-          flex-shrink: 0;
-          align-items: flex-start;
-        }
+        .ap-header-badges { display: flex; gap: 5px; flex-shrink: 0; align-items: flex-start; }
 
         .ap-badge-pro, .ap-badge-con {
-          display: inline-flex;
-          align-items: center;
-          padding: 3px 9px;
-          border-radius: var(--radius-full);
-          font-size: 0.63rem;
-          font-weight: 700;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-          border: 1px solid;
+          display: inline-flex; align-items: center;
+          padding: 3px 9px; border-radius: var(--radius-full);
+          font-size: 0.63rem; font-weight: 700;
+          text-transform: uppercase; letter-spacing: 0.05em; border: 1px solid;
         }
 
-        .ap-badge-pro {
-          background: var(--color-pro-bg);
-          color: var(--color-pro);
-          border-color: var(--color-pro-border);
-        }
-
-        .ap-badge-con {
-          background: var(--color-con-bg);
-          color: var(--color-con);
-          border-color: var(--color-con-border);
-        }
+        .ap-badge-pro { background: var(--color-pro-bg);  color: var(--color-pro);  border-color: var(--color-pro-border); }
+        .ap-badge-con { background: var(--color-con-bg);  color: var(--color-con);  border-color: var(--color-con-border); }
 
         /* Weight bar */
         .ap-weight {
-          display: flex;
-          flex-direction: column;
-          gap: 5px;
+          display: flex; flex-direction: column; gap: 5px;
           padding: 0.75rem 1rem;
           background: var(--color-surface-raised);
           border-bottom: 1px solid var(--color-border-subtle);
         }
 
-        .ap-weight-labels {
-          display: flex;
-          justify-content: space-between;
-          font-size: 0.68rem;
-          font-weight: 600;
-        }
-
-        .ap-weight-pro { color: var(--color-pro); }
-        .ap-weight-con { color: var(--color-con); }
+        .ap-weight-labels { display: flex; justify-content: space-between; font-size: 0.68rem; font-weight: 600; }
+        .ap-weight-pro    { color: var(--color-pro); }
+        .ap-weight-con    { color: var(--color-con); }
 
         .ap-weight-track {
-          position: relative;
-          height: 7px;
+          position: relative; height: 7px;
           border-radius: var(--radius-full);
-          background: var(--color-con-bg);
-          overflow: hidden;
+          background: var(--color-con-bg); overflow: hidden;
         }
 
         .ap-weight-fill {
-          position: absolute;
-          inset: 0 auto 0 0;
+          position: absolute; inset: 0 auto 0 0;
           background: linear-gradient(90deg, var(--color-pro), color-mix(in srgb, var(--color-pro) 65%, var(--yellow)));
           border-radius: var(--radius-full);
           transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .ap-weight-midline {
-          position: absolute;
-          top: 0; bottom: 0; left: 50%;
-          width: 1.5px;
-          background: var(--color-surface);
-          z-index: 1;
+          position: absolute; top: 0; bottom: 0; left: 50%;
+          width: 1.5px; background: var(--color-surface); z-index: 1;
         }
 
-        .ap-weight-note {
-          font-size: 0.62rem;
-          color: var(--color-text-tertiary);
-          margin: 0;
-        }
+        .ap-weight-note { font-size: 0.62rem; color: var(--color-text-tertiary); margin: 0; }
 
-        /* Two-column grid */
-        .ap-columns {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-        }
+        /* Columns */
+        .ap-columns { display: grid; grid-template-columns: 1fr 1fr; }
 
-        .ap-col {
-          display: flex;
-          flex-direction: column;
-        }
-
-        .ap-col:first-child {
-          border-right: 1px solid var(--color-border-subtle);
-        }
+        .ap-col { display: flex; flex-direction: column; }
+        .ap-col:first-child { border-right: 1px solid var(--color-border-subtle); }
 
         /* Column header */
         .ap-col-header {
-          display: flex;
-          align-items: center;
-          gap: 6px;
+          display: flex; align-items: center; gap: 6px;
           padding: 0.625rem 0.875rem;
           border-bottom: 1px solid var(--color-border-subtle);
         }
@@ -403,60 +403,40 @@ export default function ArgumentsPanel() {
         .ap-col-header-con { background: var(--color-con-bg); }
 
         .ap-col-icon {
-          width: 18px; height: 18px;
-          border-radius: 50%;
+          width: 18px; height: 18px; border-radius: 50%;
           display: grid; place-items: center;
-          font-size: 0.65rem; font-weight: 800;
-          flex-shrink: 0;
+          font-size: 0.65rem; font-weight: 800; flex-shrink: 0;
         }
 
         .ap-col-icon-pro { background: var(--color-pro); color: #fff; }
         .ap-col-icon-con { background: var(--color-con); color: #fff; }
 
         .ap-col-label {
-          font-size: 0.68rem;
-          font-weight: 700;
-          text-transform: uppercase;
-          letter-spacing: 0.07em;
-          flex: 1;
+          font-size: 0.68rem; font-weight: 700;
+          text-transform: uppercase; letter-spacing: 0.07em; flex: 1;
         }
 
         .ap-col-header-pro .ap-col-label { color: var(--color-pro); }
         .ap-col-header-con .ap-col-label { color: var(--color-con); }
 
         .ap-col-count {
-          font-size: 0.65rem;
-          font-weight: 700;
-          padding: 1px 6px;
-          border-radius: var(--radius-full);
-          border: 1px solid;
+          font-size: 0.65rem; font-weight: 700;
+          padding: 1px 6px; border-radius: var(--radius-full); border: 1px solid;
         }
 
-        .ap-col-header-pro .ap-col-count {
-          background: var(--color-pro-bg);
-          color: var(--color-pro);
-          border-color: var(--color-pro-border);
+        .ap-col-header-pro .ap-col-count { background: var(--color-pro-bg); color: var(--color-pro); border-color: var(--color-pro-border); }
+        .ap-col-header-con .ap-col-count { background: var(--color-con-bg); color: var(--color-con); border-color: var(--color-con-border); }
+
+        .ap-col-list { display: flex; flex-direction: column; gap: 0; padding: 0.625rem; }
+
+        .ap-empty {
+          font-size: 0.72rem; color: var(--color-text-tertiary);
+          text-align: center; padding: 1rem 0; margin: 0;
         }
 
-        .ap-col-header-con .ap-col-count {
-          background: var(--color-con-bg);
-          color: var(--color-con);
-          border-color: var(--color-con-border);
-        }
-
-        /* List */
-        .ap-col-list {
-          display: flex;
-          flex-direction: column;
-          gap: 0;
-          padding: 0.625rem;
-        }
-
-        /* ── Argument card ───────────────────────────────── */
+        /* Argument card */
         .ap-arg {
-          display: flex;
-          flex-direction: column;
-          gap: 5px;
+          display: flex; flex-direction: column; gap: 5px;
           padding: 0.625rem 0.75rem;
           border-radius: var(--radius-md);
           border: 1px solid transparent;
@@ -464,128 +444,72 @@ export default function ArgumentsPanel() {
           transition: background-color 0.14s ease, border-color 0.14s ease;
         }
 
-        .ap-arg-pro:hover {
-          background: var(--color-pro-bg);
-          border-color: var(--color-pro-border);
-        }
+        .ap-arg-pro:hover { background: var(--color-pro-bg); border-color: var(--color-pro-border); }
+        .ap-arg-con:hover { background: var(--color-con-bg); border-color: var(--color-con-border); }
 
-        .ap-arg-con:hover {
-          background: var(--color-con-bg);
-          border-color: var(--color-con-border);
-        }
-
-        .ap-arg-top {
-          display: flex;
-          align-items: center;
-          gap: 5px;
-          flex-wrap: wrap;
-        }
+        .ap-arg-top { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
 
         .ap-arg-category {
-          display: inline-flex;
-          align-items: center;
-          gap: 3px;
-          padding: 1px 6px;
-          border-radius: var(--radius-full);
-          font-size: 0.58rem;
-          font-weight: 600;
-          background: var(--background-muted);
-          color: var(--color-text-muted);
+          display: inline-flex; align-items: center; gap: 3px;
+          padding: 1px 6px; border-radius: var(--radius-full);
+          font-size: 0.58rem; font-weight: 600;
+          background: var(--background-muted); color: var(--color-text-muted);
           border: 1px solid var(--color-border-subtle);
         }
 
-        .ap-arg-strength {
-          font-size: 0.58rem;
-          font-weight: 600;
-          color: var(--color-text-tertiary);
-        }
+        .ap-arg-strength { font-size: 0.58rem; font-weight: 600; color: var(--color-text-tertiary); }
 
         .ap-arg-contested {
-          display: inline-flex;
-          align-items: center;
-          gap: 3px;
-          padding: 1px 6px;
-          border-radius: var(--radius-full);
-          font-size: 0.58rem;
-          font-weight: 600;
-          background: var(--yellow-light);
-          color: var(--yellow-dark);
+          display: inline-flex; align-items: center; gap: 3px;
+          padding: 1px 6px; border-radius: var(--radius-full);
+          font-size: 0.58rem; font-weight: 600;
+          background: var(--yellow-light); color: var(--yellow-dark);
           border: 1px solid var(--yellow-mid);
         }
 
         .ap-arg-title {
-          font-size: 0.78rem;
-          font-weight: 600;
-          color: var(--color-text-primary);
-          line-height: 1.35;
-          margin: 0;
+          font-size: 0.78rem; font-weight: 600;
+          color: var(--color-text-primary); line-height: 1.35; margin: 0;
         }
 
         .ap-arg-body {
-          font-size: 0.74rem;
-          color: var(--color-text-secondary);
-          line-height: 1.6;
-          margin: 0;
+          font-size: 0.74rem; color: var(--color-text-secondary);
+          line-height: 1.6; margin: 0;
         }
 
         .ap-arg-footer {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 6px;
-          padding-top: 4px;
-          border-top: 1px solid var(--color-border-subtle);
-          margin-top: 2px;
+          display: flex; align-items: center; justify-content: space-between;
+          gap: 6px; padding-top: 4px;
+          border-top: 1px solid var(--color-border-subtle); margin-top: 2px;
         }
 
         .ap-arg-source {
-          font-size: 0.62rem;
-          color: var(--color-text-tertiary);
-          display: flex;
-          align-items: center;
-          gap: 3px;
-          flex: 1;
-          min-width: 0;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
+          font-size: 0.62rem; color: var(--color-text-tertiary);
+          display: flex; align-items: center; gap: 3px;
+          flex: 1; min-width: 0; overflow: hidden;
+          text-overflow: ellipsis; white-space: nowrap;
         }
 
-        .ap-arg-source-id {
-          font-weight: 700;
-          color: var(--color-text-secondary);
-          flex-shrink: 0;
-        }
+        .ap-arg-source-id { font-weight: 700; color: var(--color-text-secondary); flex-shrink: 0; }
 
         .ap-arg-upvotes {
-          display: inline-flex;
-          align-items: center;
-          gap: 3px;
-          font-size: 0.62rem;
-          font-weight: 600;
-          color: var(--color-text-muted);
-          flex-shrink: 0;
+          display: inline-flex; align-items: center; gap: 3px;
+          font-size: 0.62rem; font-weight: 600;
+          color: var(--color-text-muted); flex-shrink: 0;
         }
 
         /* Disclaimer */
         .ap-disclaimer {
-          display: flex;
-          align-items: flex-start;
-          gap: 7px;
+          display: flex; align-items: flex-start; gap: 7px;
           padding: 0.75rem 1rem;
           border-top: 1px solid var(--color-border-subtle);
           background: var(--color-surface-raised);
-          font-size: 0.68rem;
-          color: var(--color-text-muted);
-          line-height: 1.55;
+          font-size: 0.68rem; color: var(--color-text-muted); line-height: 1.55;
         }
 
-        .ap-disclaimer svg {
-          flex-shrink: 0;
-          margin-top: 1px;
-        }
+        .ap-disclaimer svg { flex-shrink: 0; margin-top: 1px; }
 
-        /* Responsive: stack columns on mobile */
+        /* Responsive */
         @media (max-width: 600px) {
           .ap-columns { grid-template-columns: 1fr; }
           .ap-col:first-child { border-right: none; border-bottom: 1px solid var(--color-border-subtle); }
@@ -596,16 +520,14 @@ export default function ArgumentsPanel() {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   ARGUMENT CARD  (sub-component)
+   ARGUMENT CARD
    ───────────────────────────────────────────────────────────── */
 function ArgumentCard({ arg }: { arg: Argument }) {
-    const isPro     = arg.side === "pro";
-    const strength  = STRENGTH_CONFIG[arg.strength];
+    const isPro    = arg.side === "pro";
+    const strength = STRENGTH_CONFIG[arg.strength];
 
     return (
         <div className={`ap-arg ${isPro ? "ap-arg-pro" : "ap-arg-con"}`}>
-
-            {/* Top tags */}
             <div className="ap-arg-top">
         <span className="ap-arg-category">
           {CATEGORY_ICONS[arg.category]} {arg.category}
@@ -616,11 +538,9 @@ function ArgumentCard({ arg }: { arg: Argument }) {
                 )}
             </div>
 
-            {/* Title + body */}
             <p className="ap-arg-title">{arg.title}</p>
             <p className="ap-arg-body">{arg.body}</p>
 
-            {/* Footer: source + upvotes */}
             {(arg.sourceId || arg.upvotes > 0) && (
                 <div className="ap-arg-footer">
                     {arg.sourceId && (
@@ -630,9 +550,7 @@ function ArgumentCard({ arg }: { arg: Argument }) {
             </span>
                     )}
                     {arg.upvotes > 0 && (
-                        <span className="ap-arg-upvotes">
-              ↑ {arg.upvotes}
-            </span>
+                        <span className="ap-arg-upvotes">↑ {arg.upvotes}</span>
                     )}
                 </div>
             )}
@@ -640,5 +558,3 @@ function ArgumentCard({ arg }: { arg: Argument }) {
     );
 }
 
-
-// const data: Argument[] = await fetch(`/api/votes/${voteId}/arguments`).then(r => r.json());

@@ -5,15 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b31521f5-084d-4c01-97e4-b741f68c284b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/components/UI_Primitives/Floatingchat.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/tabs/VoteSwitcher.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/api/chat/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/chat/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/useChatStore.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/Layout/HomeClient.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Layout/HomeClient.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Referendum/FactsCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Referendum/FactsCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Referendum/PreferencesPanel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Referendum/PreferencesPanel.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Referendum/QuickTake.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Referendum/QuickTake.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Referendum/ReferendumCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Referendum/ReferendumCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Referendum/WhatChangesCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Referendum/WhatChangesCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/UI_Primitives/Floatingchat.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/UI_Primitives/Floatingchat.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/tabs/Arguments.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/tabs/Arguments.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/tabs/VoteSwitcher.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/tabs/VoteSwitcher.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,7 +23,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
@@ -36,6 +35,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;JavaScript Debug.Next.js: debug client-side.executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
@@ -52,6 +52,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.Next.js: server-side.executor&quot;: &quot;Run&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;,
     &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;,
     &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
@@ -61,13 +62,14 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/api/chat" />
       <recent name="$PROJECT_DIR$/components/tabs" />
       <recent name="$PROJECT_DIR$/components/Layout" />
       <recent name="$PROJECT_DIR$/app" />
       <recent name="$PROJECT_DIR$/lib" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.Next.js: server-side">
+  <component name="RunManager" selected="JavaScript Debug.Next.js: debug client-side">
     <configuration name="Next.js: debug client-side" type="JavascriptDebugType" uri="http://localhost:3000/">
       <method v="2" />
     </configuration>
@@ -101,7 +103,12 @@
       <workItem from="1773657371535" duration="897000" />
       <workItem from="1773659002867" duration="11601000" />
       <workItem from="1773677515023" duration="136000" />
-      <workItem from="1773678293088" duration="28426000" />
+      <workItem from="1773678293088" duration="39365000" />
+      <workItem from="1773913218086" duration="598000" />
+      <workItem from="1774007519314" duration="7157000" />
+      <workItem from="1775494425512" duration="7000" />
+      <workItem from="1780481366187" duration="1244000" />
+      <workItem from="1780950902665" duration="6219000" />
     </task>
     <servers />
   </component>

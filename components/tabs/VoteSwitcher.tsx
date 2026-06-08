@@ -54,6 +54,14 @@ export const MOCK_VOTE_OPTIONS: VoteOption[] = [
         voteDate:   "21 Sep 2025",
         status:     "upcoming",
     },
+    {
+        id:          "fed-2025-06-04",
+        type:        "initiative",
+        title:       "Initiative for a Population Growth Cap",
+        shortTitle:  "Population Cap",
+        voteDate:    "9 Jun 2025",
+        status:      "open",
+    },
 ];
 
 /* ─────────────────────────────────────────────────────────────

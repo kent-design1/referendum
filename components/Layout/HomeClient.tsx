@@ -99,9 +99,9 @@ function TitleBar({ vote, activeTab }: { vote: VoteOption; activeTab: TabId }) {
               Voting open
             </span>
                     )}
-                    {vote.proEstimate !== undefined && (
+                    {vote.status !== undefined && (
                         <span className="hc-poll-hint">
-              Polling {vote.proEstimate}% for
+              Polling {vote.status}% for
             </span>
                     )}
                 </div>
